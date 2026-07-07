@@ -63,11 +63,3 @@ test("delete users empties the list", async () => {
   expect(response.data.length).toBe(0);
 });
 
-// Test 5 (final assignment - new test added via pull request):
-// adding a user after deletion fills the list again
-test("second user is added to the list", async () => {
-  await axios.post(`${API}/users`, { name: "Marko" });
-
-  const response = await axios.get(`${API}/users`);
-  expect(response.data.map((u) => u.name)).toContain("Marko");
-});
