@@ -60,6 +60,7 @@ project/
 ├── .github/
 │   └── workflows/
 │       └── test.yml            # GitHub Actions CI pipeline
+├── docs/                       # course PDFs (project brief + requirements)
 ├── Dockerfile                  # image for the API
 ├── .dockerignore               # excludes files from the docker build context
 ├── docker-compose.yml          # orchestration of all three services
@@ -219,7 +220,7 @@ Startup order: **db → (healthy) → app → (healthy) → test**. Plain `depen
 
 ## 9. Step 7 — Running locally
 
-Prerequisites (see `docker_ci_min_requirements.pdf`): **Docker Desktop**, **Git**, **GitHub account**, **VS Code**. Node.js is NOT required — everything runs in Docker.
+Prerequisites (see [docs/docker_ci_min_requirements.pdf](docs/docker_ci_min_requirements.pdf)): **Docker Desktop**, **Git**, **GitHub account**, **VS Code**. Node.js is NOT required — everything runs in Docker. The full project brief is in [docs/](docs/).
 
 ```bash
 git clone <repository-url>
