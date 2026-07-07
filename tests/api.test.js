@@ -71,3 +71,11 @@ test("second user is added to the list", async () => {
   const response = await axios.get(`${API}/users`);
   expect(response.data.map((u) => u.name)).toContain("Marko");
 });
+
+// Test 6: a successful POST responds with {status: "ok"}
+test("post returns status ok", async () => {
+  const response = await axios.post(`${API}/users`, { name: "Petar" });
+
+  expect(response.status).toBe(200);
+  expect(response.data.status).toBe("ok");
+});
