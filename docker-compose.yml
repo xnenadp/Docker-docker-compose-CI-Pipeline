@@ -1,0 +1,43 @@
+services:
+  # 1. Database
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: testdb
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    # Health check: compose knows when the database is REALLY ready, not just started
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d testdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # 2. API application
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # Health check: the API is ready only when /users returns a response
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/users"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # 3. Test runner
+  test:
+    build: ./tests
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  dbdata:

@@ -1,0 +1,26 @@
+name: QA pipeline
+
+# Triggers: the pipeline runs on every push and on every pull request
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository
+      - uses: actions/checkout@v4
+
+      # 2. Start all containers and wait for the test result.
+      #    --abort-on-container-exit : stop everything as soon as one container exits
+      #    --exit-code-from test     : pipeline exit code = test container exit code
+      #                                (if tests fail, the pipeline goes red)
+      - name: Start containers and run tests
+        run: docker compose up --build --abort-on-container-exit --exit-code-from test
+
+      # 3. Clean up containers and volumes (runs even when tests fail)
+      - name: Stop containers
+        if: always()
+        run: docker compose down -v
