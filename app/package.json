@@ -1,0 +1,9 @@
+{
+  "name": "users-api",
+  "version": "1.0.0",
+  "description": "Simple user management API (Express + PostgreSQL)",
+  "dependencies": {
+    "express": "^4",
+    "pg": "^8"
+  }
+}
